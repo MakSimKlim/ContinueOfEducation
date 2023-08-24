@@ -63,12 +63,17 @@ void TheoryPrimer1()
 
 int main()
 {
-	Point p{5, 67};
-	cout << "Input coordinates";
-	cin >> p;
-	// console <- cout, cin
-	cout << "Your points is: " << p << "\n"; // передача экземпляра точки внутрь потока
-	return 0;
+	//Point p{5, 67};
+	//cout << "Input coordinates";
+	//cin >> p;
+	//// console <- cout, cin
+	//cout << "Your points is: " << p << "\n"; // передача экземпляра точки внутрь потока
+	//return 0;
+
+	Rectangle r1({ 0,0 }, 10, 5);
+	Rectangle r2({ 0,0 }, { 10,10 });
+	cout << "Rect 1:" << r1 << endl;
+	cout << "Rect 2:" << r2 << endl;
 
 	return 0;
 }

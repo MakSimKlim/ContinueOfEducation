@@ -34,3 +34,43 @@ public:
 	friend Rectangle;
 };
 
+class Rectangle
+{
+
+	Point leftUpperCorner;
+	Point rigytLowerCorner;
+public:
+	Rectsngle() = default;
+	Rectangle(const Point& IUCP, int sideA, int sideB)
+		: leftUpperCorner{IUCP},
+		rightLowerCorber{IUCP.x + sideA, IUCP.y + sideB}
+	{}
+	Rectangle(const Point& IUCP, const Point& rLCP)
+		:leftUpper{ IUCP }, rightLowerCorner{rLCP}
+	{}
+
+	int getSideA() const
+	{
+		return rightLowerCorner.x - leftUpperCorner.x;
+	}
+	int getSideB() const
+	{
+		return rightLowerCorner.y - leftUpperCorner.y;
+	}
+	friend ostream& operator<<(ostream& out, const Rectangle& rect);
+
+};
+
+ostream& operator<<(ostream& out, const Rectangle& rect)
+{
+	out << "[" << rect.leftUpperCorner <<" "
+		<< rect.getSideA()
+		<< " X "
+		<< rect.getSideB()
+		<< " " << rect.rightLowerCorner
+
+
+
+
+
+}
