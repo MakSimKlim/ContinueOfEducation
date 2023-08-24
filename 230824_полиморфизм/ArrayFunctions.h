@@ -37,9 +37,9 @@ void display(T array[], size_t size)
 }
 
 template <class T>
-void getValue(string promt, T& value)
+void getValue(string prompt, T& value)
 {
-	cout << promt;
+	cout << prompt;
 	cin >> value;
 	while (cin.fail())
 	{
@@ -47,7 +47,7 @@ void getValue(string promt, T& value)
 		cin.ignore(32767, '\n');
 		cout << "Error... Try again\n";
 
-		cout << promt;
+		cout << prompt;
 		cin >> value;
 
 
@@ -57,3 +57,16 @@ void getValue(string promt, T& value)
 	getline(cin, endLine);
 
 }
+
+// механизм специализации
+template<>
+void getValue<string>(string prompt, string& value)
+{
+	cout << prompt;
+	getline(cin, value);
+
+}
+// специализаци€ объ€вл€етс€ только после объ€влени€ общего шаблона
+// 
+// полна€ сепциализаци€ 
+// template <> className<dataTypeList>{classDefinition}
