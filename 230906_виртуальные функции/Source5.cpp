@@ -13,7 +13,7 @@ public:
 	virtual void Print() = 0;
 };
 
-class Manager :Employee
+class Manager : public Employee
 {
 public:
 	virtual void Print();
@@ -23,7 +23,7 @@ void Manager::Print()
 	cout << "This is Manager!" << endl;
 }
 
-class Designer :Employee
+class Designer : public Employee
 {
 public:
 	virtual void Print();
@@ -33,7 +33,7 @@ void Designer::Print()
 	cout << "This is Designer!" << endl;
 }
 
-class Programmer :Employee
+class Programmer : public Employee
 {
 public:
 	virtual void Print();
