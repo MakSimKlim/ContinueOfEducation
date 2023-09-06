@@ -45,19 +45,23 @@ void Programmer::Print()
 
 int main()
 {
-	//Employee* employes[3];
+	Employee* employes[3]{
+		new Manager(),
+		new Designer(),
+		new Programmer(),
+	};
 
-	//for (int i = 0; i < 3; i++)
-	//	employes[i]->Print();
+	for (int i = 0; i < 3; i++)
+		employes[i]->Print();
 
-	Manager manager;
-	manager.Print();
+	//Manager manager;
+	//manager.Print();
 
-	Designer designer;
-	designer.Print();
+	//Designer designer;
+	//designer.Print();
 
-	Programmer programmer;
-	programmer.Print();
+	//Programmer programmer;
+	//programmer.Print();
 
 
 	return 0;
