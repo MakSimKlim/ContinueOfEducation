@@ -77,4 +77,6 @@ int main()
 
 		}
 	}
+	_findclose(done);
+	return 0;
 };
