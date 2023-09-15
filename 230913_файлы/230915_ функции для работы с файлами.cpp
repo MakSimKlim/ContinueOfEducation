@@ -57,7 +57,7 @@
 #include <string.h>
 using namespace std;
 
-int main()
+void findfiles()
 {
 	string path, mask;
 	cout << "Enter path to directory: ";
@@ -70,7 +70,7 @@ int main()
 	if (done != -1)
 	{
 		cout << fileinfo->name << endl;
-		while (done > 0 )
+		while (done > 0)
 		{
 			done = _findnext(done, fileinfo);
 			cout << fileinfo->name << endl;
@@ -78,5 +78,36 @@ int main()
 		}
 	}
 	_findclose(done);
+
+}
+
+void removal()
+{
+	//удаление
+	string path;
+	cout << "Enter file to delete: ";
+	cin >> path;
+
+	remove(path.c_str());
+}
+
+void renamefile()
+{
+	// перемещение и переименование
+	string oldpath, newpath;
+	cout << "Enter old file name: ";
+	cin >> oldpath;
+
+	cout << "Enter new file name: ";
+	cin >> newpath;
+
+	rename(oldpath.c_str(), newpath.c_str());
+
+
+
+}
+
+int main()
+{
 	return 0;
 };
