@@ -59,6 +59,7 @@ using namespace std;
 
 void findfiles()
 {
+	//поиск файлов
 	string path, mask;
 	cout << "Enter path to directory: ";
 	cin >> path;
@@ -83,7 +84,7 @@ void findfiles()
 
 void removal()
 {
-	//удаление
+	//удаление файлов
 	string path;
 	cout << "Enter file to delete: ";
 	cin >> path;
