@@ -1,4 +1,5 @@
 ﻿// 230913_Файлы
+#define _CRT_SECURE_NO_WARNINGS // чтобы не было ошибки на fopen
 
 #include <iostream>
 
@@ -115,23 +116,97 @@
 //
 
 #include <Windows.h>
+#include <string.h>
 using namespace std;
 
-bool CopyFile(char* source, char* dest)
+bool CopyFile(const char* source, const char* dest)
 {
 	const int size = 65536;
-	FILE* src, dst;
+	FILE* src, *dst;
 
 	///открытие файла 
-	if (!(src = fopen(source, "rb")))
+	if (!(src = fopen(source, "rb")))// проверка на ошибки
 	{
 		return false;
 	}
+	int src_handle = _fileno(src);
+
+	char* data = new char[size];
+	if (!data)
+	{
+		return false;
+	}
+	// открыть файл куда будем копировать
+	if (!(dst = fopen(dest, "wb")))
+	{
+		//проверка наошибки
+		delete[] data;
+		return false;
+	}
+	int realsize;
+	// пока не достигнут конец файла, двигается файловые указатели
+	// эта конструкция частов стречается при работе с файлами
+	while (!feof(src))
+	{
+		realsize = fread(data, sizeof(char), size, src);
+		fwrite(data, sizeof(char), realsize, dst);
+	
+	}
+	fclose(src);
+	fclose(dst);
+	delete[] data;
+	return true;
+
 
 }
 
 int main()
 {
-   
+	string src_path;
+	string dst_path;
+
+	setlocale(LC_ALL, "Rus");
+
+	cout << "ВВедите путь к файлу-источнику: ";
+	cin >> src_path;
+
+	//проверка существует ли этот файл
+	// src_path.c_str() - конвертация в char (метод c_str)
+	if (_access(src_path.c_str(), 00) == -1)
+	{
+		cout << "\nУказан неверный путь к файлу\n";
+	}
+
+	cout << " Введите путь к файлу-копии: "; // этот файл необязательно должен существовать
+	cin >> dst_path;
+	//если файл существкет, провери мего наперезапись
+	if (_access(dst_path.c_str(), 00) == 0)
+	{
+		cout << "Такой файл существует. Перезаписать? Y/N >";
+		string answer;
+		cin >> answer;
+		if (answer.find_first_of("yYдД"))//если хотим перезаписать
+		{
+			if (_access(dst_path.c_str(), 02) == -1) //проверка права на запись
+			{
+				cout << "\nНет прав записи файла.\n";
+			}
+		}
+		else {
+			cout << "\nОперация отменена!\n";
+		
+			return 0;
+		}
+
+	}
+
+	if (!CopyFile(src_path.c_str(), dst_path.c_str()))
+	{
+
+
+	}
+
+
+	return 0;
 }
 
