@@ -1,5 +1,5 @@
 ﻿// 230913_Файлы
-#define _CRT_SECURE_NO_WARNINGS // чтобы не было ошибки на fopen
+#define _CRT_SECURE_NO_WARNINGS 0; // чтобы не было ошибки на fopen
 
 #include <iostream>
 
