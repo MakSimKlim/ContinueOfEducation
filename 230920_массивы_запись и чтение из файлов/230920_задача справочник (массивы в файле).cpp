@@ -85,7 +85,7 @@ void Guide::SaveToFile()
 	}
 	// char - потому что единственный, равный 1 байт
 	// записываем символы, а потом формируем новый string из этих символов
-	f.write((char*)&telNumber, sizeof(telNumber));// (char*)&age - конвертация в указатель на байт с которого начинается age и потом говорим сколько считать байт sizeof(age)
+	f.write((char*)&telNumber, sizeof(telNumber));// (char*)&telNumber - конвертация в указатель на байт с которого начинается age и потом говорим сколько считать байт sizeof(telNumber)
 
 	size = name.length();
 	f.write((char*)&size, sizeof(size));
