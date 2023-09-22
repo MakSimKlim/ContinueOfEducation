@@ -1,0 +1,141 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int Menu()
+{
+	cout << "\n1. Add new object to file\n";
+	cout << "2. Show all objects in file\n";
+	cout << "3. Exit\n";
+	cout << "> ";
+	int choice;
+	cin >> choice;
+	return choice;
+}
+
+class TelBook
+{
+	string name;
+	string number;
+	string adress;
+	bool IsCompany;
+	
+public:
+	TelBook(string, string, bool, string);
+	TelBook();
+	~TelBook();
+
+	void Put();
+	void Show();
+	void SaveToFile();
+	static void DisplayFromFile();
+};
+
+TelBook::TelBook()
+{
+	name = "";
+	number = "";	
+	IsCompany = 0;
+	adress = "";
+}
+
+TelBook::TelBook(string nameP, string numberP, bool IsCompany, string adressP ) :
+	name{ nameP }, number{ numberP }, IsCompany{ false }, adress{ adressP }
+{}
+
+TelBook::~TelBook()
+{}
+
+void TelBook::Put()
+{
+	cout << "\nEnter name: ";
+	cin >> name;
+	cout << "\nEnter number: ";
+	cin >> number;
+	cout << "\nThis is Company? : ";
+	cin >> IsCompany;
+	cout << "\nEnter adress: ";
+	cin >> adress;
+}
+
+void TelBook::Show()
+{
+	cout << name << " " << number << "is Company y/n? " << IsCompany << " adress: "<<adress;
+}
+
+void TelBook::SaveToFile()
+{
+	int size;
+	fstream f("telbook.txt", ios::out | ios::binary | ios::app);
+	if (!f)
+	{
+		cout << "Couldn't open file.";
+		exit(1);
+	}
+	f.write((char*)&name, sizeof(name));
+	size = name.length();
+	f.write((char*)&size, sizeof(size));
+	f.write(name.c_str(), size * sizeof(char));
+
+	size = number.length();
+	f.write((char*)&size, sizeof(size));
+	f.write(number.c_str(), size * sizeof(char));
+
+	size = adress.length();
+	f.write((bool*)&size, sizeof(size));
+	f.write(adress.c_str(), size * sizeof(char));
+
+	f.close();
+}
+
+
+void TelBook::DisplayFromFile()
+{
+	fstream f("telbook.txt", ios::in | ios::binary);
+	if (!f)
+	{
+		cout << "Couldn't open the file";
+		exit(1);
+	}
+	char* n, * num, * adr;
+	int a, temp;
+	bool IsComp;
+	while (f.read((char*)&a, sizeof(int))) {
+		f.read((char*)&temp, sizeof(int));
+		n = new char[temp + 1];
+		f.read((char*)n, temp * sizeof(char));
+		n[temp] = '\0';
+
+		f.read((char*)&temp, sizeof(int));
+		num = new char[temp + 1];
+		f.read((char*)num, temp * sizeof(char));
+		num[temp] = '\0';
+
+		f.read((char*)&temp, sizeof(int));
+		adr = new char[temp + 1];
+		f.read((char*)adr, temp * sizeof(char));
+		adr[temp] = '\0';
+
+		TelBook telbook{ n, num, IsComp, adr };
+		telbook.Show();
+	}
+}
+
+int main()
+{
+	int answer;
+	do {
+		answer = Menu();
+		if (answer == 1)
+		{
+			TelBook telBook;
+			telBook.Put();
+			telBook.SaveToFile();
+		}
+		else
+		{
+			TelBook::DisplayFromFile();
+		}
+	} while (answer != 3);
+	return 0;
+}
