@@ -4,7 +4,7 @@
 // - const_cast - для снятия свойства постоянстыва
 // - volatile - обратная константе (говорит компилятору, что значение будет меняться по какому-то условию)
 // - полиморфизм - неявный тип
-// - dynamic_cast
+// - dynamic_cast (можем скастовать дочерний класс в родительский, но не наоборот) - чтобы без ошибок приводить дочерние к лассы к указателю на родительский
 
 #include <iostream>
 using namespace std;
@@ -28,7 +28,7 @@ public:
 
 };
 
-class B:A
+class B: public A // если отсутствует public - блокируется полиморфизм
 {
 public:
 	void Test() { cout << "I'm B!\n"; }
@@ -71,17 +71,58 @@ int main()
 	ptr_a = dynamic_cast<A*>(&obj_a);// если cast не удался, там будет 0
 	if (ptr_a)
 	{
-		cout << "Good work A - ";
+		cout << "Good work A - " << endl;
 		ptr_a->Test();
 
 	}
+	else
+	{
+		cout << "Cast error" << endl;
+
+	}
+
+
 	ptr_b = dynamic_cast<B*>(&obj_a);// если cast не удался, там будет 0
 	if (ptr_b)
 	{
-		cout << "Good work B - ";
+		cout << "Good work B - " << endl;
 		ptr_b->Test();
 
 	}
+	else
+	{
+		cout << "Cast error" << endl;
+
+	}
+
+	ptr_b = dynamic_cast<B*>(&obj_b);// если cast не удался, там будет 0
+	if (ptr_b)
+	{
+		cout << "Good work B - " << endl;
+		ptr_b->Test();
+
+	}
+	else
+	{
+		cout << "Cast error" << endl;
+
+	}
+
+
+	ptr_a = dynamic_cast<A*>(&obj_b);// если cast не удался, там будет 0
+	if (ptr_a)
+	{
+		cout << "Good work B - " << endl;
+		ptr_a->Test();
+
+	}
+	else
+	{
+		cout << "Cast error" << endl;
+
+	}
+
+
 
 
 
