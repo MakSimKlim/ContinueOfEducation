@@ -86,6 +86,7 @@ int main()
     {
         cout << "Sit" << i + 1 << " has " << sits[i]->amountOfLegs << " legs." << "\n";
         sits[i]->sit();
+        delete sits[i];// вся память которая выделена, должна быть освобождена
 
     }
     delete[] sits;
